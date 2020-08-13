@@ -1,0 +1,12 @@
+name: VillageCommunity
+main: cn.jji8.VillageCommunity.main
+version: 1.0
+author: jianjianai
+api-version: 1.13
+commands:
+  VillageCommunity:
+    aliases: [vc]
+    description: "VillageCommunity的主命令"
+    permission: 音乐.加载音乐
+    permission-message: "你没有权限执行此命令"
+    usage: /<command> 命令
