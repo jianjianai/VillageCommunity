@@ -1,0 +1,76 @@
+#gui主界面名字
+Nameofmaininterface: "村庄菜单"
+#主界面大小
+Maininterfacesize: 3
+#填充物品
+Fillingitems: "LIGHT_GRAY_STAINED_GLASS_PANE"
+Fillingitemsname: "一个你看不见的小东西"
+#自定义旗帜放置位置（将旗帜放在这个位置点击确定即可更换村庄旗帜）
+Placementposition: 9
+#确定更换旗帜按钮
+determineposition: "GOLD_BLOCK"
+determinepositionseat: 18
+determinepositionname: "更换旗帜(将旗帜放在上方即可)"
+
+#无领地换旗帜
+Noterritory: "你没有村庄，不可以换旗帜"
+Replacementsuccessful: "更换旗帜成功"
+Noterritory1: "你不是管理也不是村长"
+Noterritory2: "标识物品不可以是空气"
+
+#余额物品
+Balanceitems: "SUNFLOWER"
+Balanceitemsname: "村庄公款余额%钱%￥"
+Balanceitemsint: 1
+Balanceitemsname1: "你没有加入村庄"
+
+#成员列表
+Memberlist: "PLAYER_HEAD"
+Memberlistname: "成员列表"
+Memberlistint: 2
+noMemberlistint: "你没有村装"
+
+#旗帜显示位置
+Noterritorypositionseat: 0
+#没加入村庄显示物品
+NoterritorypositionseatTYPE: "GOLD_BLOCK"
+#没加入村庄显示物品名字
+Noterritorypositionseatname: "没加入任何村庄"
+
+informationlist: "成员列表,第：%页数%页"
+
+
+
+#村庄创建失败提示语
+Villagecreationfailed: "创建失败，需要选择两个点哦"
+createInventoryname: "村庄列表,第：%页数%页"
+#上一页按钮名字
+previouspage: "上一页"
+#按钮type
+previouspageTYPE: "MAGENTA_STAINED_GLASS_PANE"
+nextpage: "下一页"
+nextpageTYPE: "MAGENTA_STAINED_GLASS_PANE"
+#按钮位置
+previouspageint: 45
+nextpageint: 53
+
+#已经有同样名字的村庄了
+Thereisalreadyavillagewiththesamename: "已存在名称叫做%name%的村庄了"
+#你不可以和其他村庄重合
+Youcantoverlapwithothervillages: "你不可以和其他村庄重合"
+#创建成功
+Createdsuccessfully: "创建成功"
+
+#村庄重合时
+coincidence: "你不可以和其他村庄重合"
+position1: "已选择位置1"
+position2: "已选择位置2"
+
+leave: "离开村庄"
+leaveX: "欢迎下次再来"
+getinto: "进入村庄%村庄%"
+getintoX: "村长是%村长%"
+
+
+
+
