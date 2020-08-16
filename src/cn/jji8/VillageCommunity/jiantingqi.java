@@ -3,10 +3,12 @@ package cn.jji8.VillageCommunity;
 import cn.jji8.VillageCommunity.gui.guilist;
 import cn.jji8.VillageCommunity.gui.information;
 import cn.jji8.VillageCommunity.gui.list;
+import cn.jji8.VillageCommunity.gui.toexamine;
 import cn.jji8.VillageCommunity.lingdi.lingdi;
 import cn.jji8.VillageCommunity.lingdi.lingdilist;
 import cn.jji8.VillageCommunity.quandi.quandi;
 import com.sun.javafx.scene.traversal.ContainerTabOrder;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -19,14 +21,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerCommandSendEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用于监听各种事件，将事件传递给其他类处理
@@ -121,6 +123,22 @@ public class jiantingqi implements Listener, CommandExecutor, TabCompleter {
                 }
                 return cn.jji8.VillageCommunity.Command.申请(commandSender,strings);
             }
+            case "toexamine":
+            case "审核":{//审核
+                if(!commandSender.hasPermission("VillageCommunity.toexamine")){
+                    commandSender.sendMessage("你没有执行此命令的权限");
+                    return true;
+                }
+                return cn.jji8.VillageCommunity.Command.审核(commandSender,strings);
+            }
+            case "contribution":
+            case "捐款":{//捐款
+                if(!commandSender.hasPermission("VillageCommunity.contribution")){
+                    commandSender.sendMessage("你没有执行此命令的权限");
+                    return true;
+                }
+                return cn.jji8.VillageCommunity.Command.捐款(commandSender,strings);
+            }
             default:return false;
         }
     }
@@ -135,6 +153,8 @@ public class jiantingqi implements Listener, CommandExecutor, TabCompleter {
         commandSender.sendMessage("/VillageCommunity birthplace/设置村庄出生点     //设置村庄出生点");
         commandSender.sendMessage("/VillageCommunity signout/离开村庄             //退出或解散村庄");
         commandSender.sendMessage("/VillageCommunity apply/申请 村庄名字           //申请加入一个村庄");
+        commandSender.sendMessage("/VillageCommunity toexamine/审核               //审核申请加入村庄的玩家");
+        commandSender.sendMessage("/VillageCommunity contribution/捐款 钱数        //向村庄捐款");
     }
     List<String> ml(){
         ArrayList<String> ArrayList = new ArrayList();
@@ -147,6 +167,9 @@ public class jiantingqi implements Listener, CommandExecutor, TabCompleter {
         ArrayList.add("成员信息");
         ArrayList.add("设置村庄出生点");
         ArrayList.add("离开村庄");
+        ArrayList.add("申请");
+        ArrayList.add("审核");
+        ArrayList.add("捐款");
 
         ArrayList.add("establish");
         ArrayList.add("list");
@@ -157,6 +180,9 @@ public class jiantingqi implements Listener, CommandExecutor, TabCompleter {
         ArrayList.add("information");
         ArrayList.add("birthplace");
         ArrayList.add("signout");
+        ArrayList.add("apply");
+        ArrayList.add("toexamine");
+        ArrayList.add("contribution");
 
         return ArrayList;
 
@@ -220,6 +246,7 @@ public class jiantingqi implements Listener, CommandExecutor, TabCompleter {
         list.dianji(a);
         guilist.diaji(a);
         information.dianji(a);
+        toexamine.dianji(a);
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
@@ -239,6 +266,37 @@ public class jiantingqi implements Listener, CommandExecutor, TabCompleter {
             }
         };
         R.runTaskLater(main.main,20);
+    }
+
+    @EventHandler(priority=EventPriority.MONITOR)
+    public void wanjia(PlayerJoinEvent a){//玩家进入服务器时
+        BukkitRunnable BukkitRunnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                lingdi lingdi = lingdilist.chaxun(a.getPlayer());
+                if(lingdi == null){
+                    return;
+                }
+                if(lingdi.shenqingliebiao.size()==0){
+                    return;
+                }
+                if(lingdi.cunzhang.equals(a.getPlayer().getName())){
+                    a.getPlayer().sendMessage("有"+lingdi.shenqingliebiao.size()+"人申请加入你的村庄，请尽快处理");
+                    return;
+                }
+                boolean guanli = false;
+                for(int i = 0; i<lingdi.guanli.size();i++){
+                    if(lingdi.guanli.get(i).equals(a.getPlayer().getName())){
+                        guanli = true;
+                    }
+                }
+                if(guanli){
+                    a.getPlayer().sendMessage("有"+lingdi.shenqingliebiao.size()+"人申请加入你的村庄，请尽快处理");
+                }
+            }
+        };
+        BukkitRunnable.runTaskLater(main.main,80);
+        return;
     }
 
 }

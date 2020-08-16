@@ -12,6 +12,11 @@ determineposition: "GOLD_BLOCK"
 determinepositionseat: 18
 determinepositionname: "更换旗帜(将旗帜放在上方即可)"
 
+#申请列表按钮
+apply: "LEVER"
+applyname: "申请列表"
+applyint: 3
+
 #无领地换旗帜
 Noterritory: "你没有村庄，不可以换旗帜"
 Replacementsuccessful: "更换旗帜成功"
@@ -29,6 +34,9 @@ Memberlist: "PLAYER_HEAD"
 Memberlistname: "成员列表"
 Memberlistint: 2
 noMemberlistint: "你没有村装"
+
+#申请列表
+toexaminelist: "申请列表,第：%页数%页"
 
 #旗帜显示位置
 Noterritorypositionseat: 0
@@ -71,6 +79,11 @@ leaveX: "欢迎下次再来"
 getinto: "进入村庄%村庄%"
 getintoX: "村长是%村长%"
 
+#关于钱
+#创建村庄需要花费的金钱
+establish: 10
+#申请需要花钱
+apply: 5
 
 
 

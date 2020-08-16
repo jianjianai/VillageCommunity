@@ -3,9 +3,12 @@ package cn.jji8.VillageCommunity;
 import cn.jji8.VillageCommunity.gui.guilist;
 import cn.jji8.VillageCommunity.gui.information;
 import cn.jji8.VillageCommunity.gui.list;
+import cn.jji8.VillageCommunity.gui.toexamine;
 import cn.jji8.VillageCommunity.lingdi.lingdi;
 import cn.jji8.VillageCommunity.lingdi.lingdilist;
 import cn.jji8.VillageCommunity.quandi.quandi;
+import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,7 +23,9 @@ public class Command {
         }
         lingdi lingdi = lingdilist.chaxun((Player) commandSender);
         if(lingdi==null){
-            quandi.chuangjian(commandSender.getName(),strings[1]);
+            if(money.kouqian((Player) commandSender,main.main.getConfig().getInt("establish"))){//判断操作是否成功
+                quandi.chuangjian(commandSender.getName(),strings[1]);
+            }
             return true;
         }
         commandSender.sendMessage("你已经有村庄了");
@@ -85,6 +90,23 @@ public class Command {
             lingdi lingdi = lingdilist.chaxun((Player) commandSender);
             if(lingdi==null){
                 commandSender.sendMessage("你还没有村庄");
+                return true;
+            }
+            boolean chengyuan = false;
+            for(int i = 0;i<lingdi.cunmin.size();i++){
+                if(lingdi.cunmin.get(i).equals(strings[1])){
+                    chengyuan=true;
+                }
+            }
+            if(chengyuan){
+                lingdi.cunmin.remove(strings[1]);
+                lingdi.guanli.add(strings[1]);
+                lingdi.baocun();
+                commandSender.sendMessage("已将村民"+strings[1]+"设为管理");
+                return true;
+            }
+            if(!commandSender.hasPermission("VillageCommunity.directaddadmin")){
+                commandSender.sendMessage(strings[1]+"不是村庄的村民，你不可以把他设为管理");
                 return true;
             }
             if(lingdi.cunzhang.equals(commandSender.getName())){
@@ -208,6 +230,11 @@ public class Command {
             commandSender.sendMessage("你输入的村庄名字有误");
             return true;
         }
+
+        if(money.kouqian((Player) commandSender,main.main.getConfig().getInt("apply"))){//判断操作是否成功
+            quandi.chuangjian(commandSender.getName(),strings[1]);
+        }
+
         lingdi.shenqingliebiao.add(commandSender.getName());
         lingdi.baocun();
         commandSender.sendMessage("已申请，等待管理审核");
@@ -224,6 +251,46 @@ public class Command {
                 return true;
             }
             guanli.sendMessage("玩家"+commandSender.getName()+"申请加入你的村庄，打开管理面板即可处理");
+        }
+        return true;
+    }
+    public static boolean 审核(CommandSender commandSender, String[] strings){
+        if(!(commandSender instanceof Player)){
+            commandSender.sendMessage("此命令只可以玩家执行");
+            return true;
+        }
+        lingdi lingdi = lingdilist.chaxunname(commandSender.getName());
+        if(lingdi==null){
+            commandSender.sendMessage("你还没有村庄");
+            return true;
+        }
+        toexamine.dakai((Player) commandSender,lingdi);
+        return true;
+    }
+    public static boolean 捐款(CommandSender commandSender, String[] strings){
+        if(strings.length<2){
+            commandSender.sendMessage("/VillageCommunity contribution/捐款 钱数        //向村庄捐款");
+            return true;
+        }
+        if(!(commandSender instanceof Player)){
+            commandSender.sendMessage("此命令只可以玩家执行");
+            return true;
+        }
+        lingdi lingdi = lingdilist.chaxunname(commandSender.getName());
+        if(lingdi==null){
+            commandSender.sendMessage("你还没有村庄");
+            return true;
+        }
+        int qian;
+        try {
+            qian = Integer.parseInt(strings[1]);
+        }catch (NumberFormatException a){
+            commandSender.sendMessage(strings[1]+"不是一个有效的数字");
+            return true;
+        }
+        if(money.kouqian((Player) commandSender,qian)){
+            lingdi.qian += qian;
+            lingdi.baocun();
         }
         return true;
     }

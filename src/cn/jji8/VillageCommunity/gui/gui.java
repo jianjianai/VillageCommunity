@@ -65,6 +65,13 @@ public class gui {
         ItemStack.setItemMeta(ItemMeta);
         xiangzi.setItem(main.getMain().getConfig().getInt("Memberlistint"),ItemStack);
 
+        //申请列表
+        ItemStack = new ItemStack(Material.getMaterial(main.getMain().getConfig().getString("apply")));
+        ItemMeta = ItemStack.getItemMeta();
+        ItemMeta.setDisplayName(main.getMain().getConfig().getString("applyname"));
+        ItemStack.setItemMeta(ItemMeta);
+        xiangzi.setItem(main.getMain().getConfig().getInt("applyint"),ItemStack);
+
         P.openInventory(xiangzi);
     }
     /**
@@ -111,6 +118,10 @@ public class gui {
                     return;
                 }
                 information.dakai((Player) a.getWhoClicked());
+                return;
+            }
+            if(main.getMain().getConfig().getInt("applyint")==a.getRawSlot()){
+                toexamine.dakai((Player) a.getWhoClicked());
                 return;
             }
         }

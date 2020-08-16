@@ -19,9 +19,9 @@ public class lingdi {
     public String name;//领地名字
     public String cunzhang;//村长名字
     public String worid;//领地的世界
-    public List<String> cunmin = new ArrayList<String>();//村民
-    public List<String> guanli = new ArrayList<String>();;//成员
-    public List<String> shenqingliebiao = new ArrayList<String>();;//申请列表
+    public List<String> cunmin = new ArrayList<>();//村民
+    public List<String> guanli = new ArrayList<>();//成员
+    public List<String> shenqingliebiao = new ArrayList<>();//申请列表
     //领地的点坐标
     public double x1;
     public double z1;
